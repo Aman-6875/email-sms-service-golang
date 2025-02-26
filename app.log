@@ -1,0 +1,20 @@
+{
+  "level": "info",
+  "msg": "Logger initialized successfully!",
+  "time": "2025-02-27T01:18:07+06:00"
+}
+{
+  "level": "info",
+  "msg": "Message enqueued successfully in queue: email_queue",
+  "time": "2025-02-27T01:18:07+06:00"
+}
+{
+  "level": "info",
+  "msg": "Processing message: {\"body\":\"Thank you for signing up.\",\"subject\":\"Welcome!\",\"to\":\"user@example.com\",\"type\":\"email\"}",
+  "time": "2025-02-27T01:18:07+06:00"
+}
+{
+  "level": "info",
+  "msg": "Message dequeued and processed from queue: email_queue",
+  "time": "2025-02-27T01:18:07+06:00"
+}
