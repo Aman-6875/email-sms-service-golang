@@ -1,20 +1,25 @@
 {
   "level": "info",
   "msg": "Logger initialized successfully!",
-  "time": "2025-02-27T01:18:07+06:00"
+  "time": "2025-02-27T21:55:12+06:00"
+}
+{
+  "level": "error",
+  "msg": "Failed to send email: failed to connect to SMTP server: tls: first record does not look like a TLS handshake",
+  "time": "2025-02-27T21:55:13+06:00"
+}
+{
+  "level": "error",
+  "msg": "Failed to send email: failed to connect to SMTP server: tls: first record does not look like a TLS handshake",
+  "time": "2025-02-27T21:55:13+06:00"
 }
 {
   "level": "info",
-  "msg": "Message enqueued successfully in queue: email_queue",
-  "time": "2025-02-27T01:18:07+06:00"
+  "msg": "Logger initialized successfully!",
+  "time": "2025-02-27T22:02:10+06:00"
 }
 {
   "level": "info",
-  "msg": "Processing message: {\"body\":\"Thank you for signing up.\",\"subject\":\"Welcome!\",\"to\":\"user@example.com\",\"type\":\"email\"}",
-  "time": "2025-02-27T01:18:07+06:00"
-}
-{
-  "level": "info",
-  "msg": "Message dequeued and processed from queue: email_queue",
-  "time": "2025-02-27T01:18:07+06:00"
+  "msg": "Email sent successfully to: user@example.com",
+  "time": "2025-02-27T22:02:13+06:00"
 }
