@@ -1,35 +1,50 @@
 {
   "level": "info",
-  "msg": "Logger initialized successfully!",
-  "time": "2025-03-01T15:02:41+06:00"
+  "msg": "Using email provider: SMTP",
+  "time": "2025-03-01T22:59:20+06:00"
 }
 {
   "level": "info",
   "msg": "Message enqueued successfully in queue: email_queue",
-  "time": "2025-03-01T15:02:41+06:00"
-}
-{
-  "level": "info",
-  "msg": "Application is running. Press Ctrl+C to exit.",
-  "time": "2025-03-01T15:02:41+06:00"
-}
-{
-  "level": "info",
-  "msg": "Using email provider: SMTP",
-  "time": "2025-03-01T15:02:41+06:00"
+  "time": "2025-03-01T22:59:20+06:00"
 }
 {
   "level": "info",
   "msg": "Email sent successfully to: user@example.com",
-  "time": "2025-03-01T15:02:45+06:00"
+  "time": "2025-03-01T22:59:23+06:00"
 }
 {
   "level": "info",
-  "msg": "Email sent successfully to: user@example.com (Total sent: 1)",
-  "time": "2025-03-01T15:02:45+06:00"
+  "msg": "Email sent successfully to: user@example.com (Total sent: 21)",
+  "time": "2025-03-01T22:59:24+06:00"
 }
 {
   "level": "info",
   "msg": "Message dequeued and processed from queue: email_queue",
-  "time": "2025-03-01T15:02:45+06:00"
+  "time": "2025-03-01T22:59:24+06:00"
+}
+{
+  "level": "info",
+  "msg": "Message enqueued successfully in queue: email_queue",
+  "time": "2025-03-01T22:59:33+06:00"
+}
+{
+  "level": "info",
+  "msg": "Using email provider: SMTP",
+  "time": "2025-03-01T22:59:33+06:00"
+}
+{
+  "level": "info",
+  "msg": "Email sent successfully to: user@example.com",
+  "time": "2025-03-01T22:59:37+06:00"
+}
+{
+  "level": "info",
+  "msg": "Email sent successfully to: user@example.com (Total sent: 22)",
+  "time": "2025-03-01T22:59:38+06:00"
+}
+{
+  "level": "info",
+  "msg": "Message dequeued and processed from queue: email_queue",
+  "time": "2025-03-01T22:59:38+06:00"
 }
