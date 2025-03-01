@@ -8,6 +8,7 @@ import (
 )
 
 type EmailProvider interface {
+    Name() string
 	SendEmail(to, subject, body string) error
 }
 
@@ -24,6 +25,9 @@ type SMTPProvider struct {
     config SMTPConfig
 }
 
+func (p *SMTPProvider) Name() string {
+    return "SMTP"
+}
 func NewSMTPProvider (config SMTPConfig) *SMTPProvider {
 	return &SMTPProvider{
 		config: config,

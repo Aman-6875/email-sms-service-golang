@@ -5,6 +5,7 @@ import (
 	"email-sms-service/internal/email"
 	"email-sms-service/internal/storage"
 	"email-sms-service/pkg/logger"
+	"email-sms-service/pkg/queue"
 )
 
 func main() {
@@ -18,8 +19,20 @@ func main() {
 
 	storage.InitRedis()
 
-	err := email.SendEmail("user@example.com", "Welcome!", "Thank you for signing up.")
-	if err != nil {
-		logger.Log.Errorf("Failed to send email: %v", err)
+	q := queue.NewQueue(storage.GetRedis())
+
+	task := email.EmailTask{
+		To:      "user@example.com",
+		Subject: "Welcome!",
+		Body:    "Thank you for signing up.",
 	}
+
+	if err := q.EnqueueEmailTask(task); err != nil {
+		logger.Log.Errorf("Failed to enqueue email task: %v", err)
+	}
+
+	go q.ProcessEmailTasks()
+
+	logger.Log.Info("Application is running. Press Ctrl+C to exit.")
+	select {}
 }

@@ -2,6 +2,7 @@ package queue
 
 import (
 	"context"
+	"email-sms-service/internal/email"
 	"email-sms-service/pkg/logger"
 	"encoding/json"
 	"fmt"
@@ -58,4 +59,34 @@ func (q *Queue) Dequeue(queueName string, handler func(message string)) error {
 
 	logger.Log.Infof("Message dequeued and processed from queue: %s", queueName)
 	return nil
+}
+
+func (q *Queue) EnqueueEmailTask(task email.EmailTask) error {
+	return q.Enqueue("email_queue", task)
+}
+
+func (q *Queue) ProcessEmailTasks() {
+	for {
+		err := q.Dequeue("email_queue", func(message string) {
+			var task email.EmailTask
+			if err := json.Unmarshal([]byte(message), &task); err != nil {
+				logger.Log.Errorf("failed to deserialize email task: %v", err)
+				return
+			}
+
+			if err := email.SendEmail(task.To, task.Subject, task.Body); err != nil {
+				logger.Log.Errorf("Failed to send email after retries: %v", err)
+
+				if err := q.Enqueue("email_queue_dlq", task); err != nil {
+                    logger.Log.Errorf("Failed to move task to DLQ: %v", err)
+                }
+				return
+			}
+
+		})
+
+		if err != nil {
+			logger.Log.Errorf("failed to dequeue email task: %v", err)
+		}
+	}
 }
