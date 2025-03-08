@@ -1,19 +1,20 @@
 package email
 
 import (
-	"bytes"
 	"email-sms-service/pkg/logger"
 	"fmt"
-	"mime/multipart"
-	"net/smtp"
-	"net/textproto"
+	"io"
+
+	"gopkg.in/gomail.v2"
 )
 
+// EmailProvider defines the interface for sending emails
 type EmailProvider interface {
 	Name() string
 	SendEmail(task EmailTask) error
 }
 
+// SMTPConfig holds the configuration for the SMTP provider
 type SMTPConfig struct {
 	Host     string
 	Port     string
@@ -22,133 +23,84 @@ type SMTPConfig struct {
 	From     string
 }
 
+// SMTPProvider implements the EmailProvider interface using SMTP
 type SMTPProvider struct {
 	config SMTPConfig
 }
 
+// Name returns the name of the provider
 func (p *SMTPProvider) Name() string {
 	return "SMTP"
 }
+
+// NewSMTPProvider creates a new SMTPProvider instance
 func NewSMTPProvider(config SMTPConfig) *SMTPProvider {
 	return &SMTPProvider{
 		config: config,
 	}
 }
 
+// SendEmail sends an email using the SMTP provider
 func (p *SMTPProvider) SendEmail(task EmailTask) error {
-	var htmlBody string
+	const maxRetries = 3
+	var err error
 
+	for i := 0; i < maxRetries; i++ {
+		err = p.sendEmail(task)
+		if err == nil {
+			return nil // Email sent successfully
+		}
+
+		logger.Log.Warnf("Attempt %d: Failed to send email: %v", i+1, err)
+	}
+
+	return fmt.Errorf("failed to send email after %d attempts: %v", maxRetries, err)
+}
+
+// sendEmail contains the actual email sending logic
+func (p *SMTPProvider) sendEmail(task EmailTask) error {
+	// Parse the HTML template if provided
+	var htmlBody string
 	if task.Template != "" {
 		var err error
 		htmlBody, err = ParseTemplate(task.Template, task.TemplateData)
-
 		if err != nil {
 			return fmt.Errorf("failed to parse HTML template: %v", err)
 		}
 	}
-	auth := smtp.PlainAuth("", p.config.Username, p.config.Password, p.config.Host)
 
-	var msg bytes.Buffer
+	// Create a new email message
+	m := gomail.NewMessage()
+	m.SetHeader("From", p.config.From)
+	m.SetHeader("To", task.To)
+	m.SetHeader("Subject", task.Subject)
 
-	writer := multipart.NewWriter(&msg)
-
-	headers := map[string]string{
-		"From":         p.config.From,
-		"To":           task.To,
-		"Subject":      task.Subject,
-		"MIME-Version": "1.0",
-		"Content-Type": "multipart/mixed; boundary=" + writer.Boundary(),
-	}
-
-	for key, value := range headers {
-		msg.WriteString(fmt.Sprintf("%s: %s\r\n", key, value))
-	}
-	msg.WriteString("\r\n")
-
+	// Add plain text body
 	if task.Body != "" {
-		part, err := writer.CreatePart(textproto.MIMEHeader{
-			"Content-Type": []string{"text/plain; charset=UTF-8"},
-		})
-		if err != nil {
-			return fmt.Errorf("failed to create plain text part: %v", err)
-		}
-		part.Write([]byte(htmlBody))
+		m.SetBody("text/plain", task.Body)
 	}
 
-    if htmlBody != "" {
-		part, err := writer.CreatePart(textproto.MIMEHeader{
-			"Content-Type": []string{"text/html; charset=UTF-8"},
-		})
-		if err != nil {
-			return fmt.Errorf("failed to create HTML part: %v", err)
-		}
-		part.Write([]byte(htmlBody))
+	// Add HTML body
+	if htmlBody != "" {
+		m.SetBody("text/html", htmlBody)
 	}
 
+	// Add attachments
 	for _, attachment := range task.Attachments {
-		part, err := writer.CreatePart(textproto.MIMEHeader{
-			"Content-Type":        []string{"application/octet-stream"},
-			"Content-Disposition": []string{fmt.Sprintf("attachment; filename=\"%s\"", attachment.FileName)},
-		})
-		if err != nil {
-			return fmt.Errorf("failed to create attachment part: %v", err)
-		}
-		part.Write(attachment.Content)
+		m.Attach(attachment.FileName, gomail.SetCopyFunc(func(w io.Writer) error {
+			_, err := w.Write(attachment.Content)
+			return err
+		}))
 	}
-	writer.Close()
 
-	err := smtp.SendMail(
-		fmt.Sprintf("%s:%s", p.config.Host, p.config.Port),
-		auth,
-		p.config.From,
-		[]string{task.To},
-		msg.Bytes(),
-	)
+	// Create a new dialer
+	d := gomail.NewDialer(p.config.Host, 465, p.config.Username, p.config.Password)
 
-	if err != nil {
+	// Send the email
+	if err := d.DialAndSend(m); err != nil {
 		return fmt.Errorf("failed to send email: %v", err)
 	}
 
 	logger.Log.Infof("Email sent successfully to: %s", task.To)
 	return nil
-	// client, err := smtp.Dial(fmt.Sprintf("%s:%s", p.config.Host, p.config.Port))
-	// if err != nil {
-	//     return fmt.Errorf("failed to connect to SMTP server: %v", err)
-	// }
-	// defer client.Quit()
-
-	// // Start TLS
-	// if err := client.StartTLS(&tls.Config{
-	//     InsecureSkipVerify: true, // Only for testing; use proper certificates in production
-	//     ServerName:         p.config.Host,
-	// }); err != nil {
-	//     return fmt.Errorf("failed to start TLS: %v", err)
-	// }
-
-	// if err := client.Auth(auth); err != nil {
-	//     return fmt.Errorf("failed to authenticate: %v", err)
-	// }
-
-	// if err := client.Mail(p.config.From); err != nil {
-	//     return fmt.Errorf("failed to set sender: %v", err)
-	// }
-
-	// if err := client.Rcpt(to); err != nil {
-	//     return fmt.Errorf("failed to set recipient: %v", err)
-	// }
-
-	// wc, err := client.Data()
-	// if err != nil {
-	//     return fmt.Errorf("failed to prepare email body: %v", err)
-	// }
-	// defer wc.Close()
-
-	// emailBody := fmt.Sprintf("To: %s\r\nSubject: %s\r\n\r\n%s", to, subject, body)
-
-	// if _, err := wc.Write([]byte(emailBody)); err != nil {
-	//     return fmt.Errorf("failed to write email body: %v", err)
-	// }
-
-	// logger.Log.Infof("Email sent successfully to: %s", to)
-	// return nil
 }
