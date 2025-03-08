@@ -74,12 +74,12 @@ func (q *Queue) ProcessEmailTasks() {
 				return
 			}
 
-			if err := email.SendEmail(task.To, task.Subject, task.Body); err != nil {
+			if err := email.SendEmail(task); err != nil {
 				logger.Log.Errorf("Failed to send email after retries: %v", err)
 
 				if err := q.Enqueue("email_queue_dlq", task); err != nil {
-                    logger.Log.Errorf("Failed to move task to DLQ: %v", err)
-                }
+					logger.Log.Errorf("Failed to move task to DLQ: %v", err)
+				}
 				return
 			}
 

@@ -12,6 +12,9 @@ type SendEmailRequest struct {
 	To      string `json:"to"`
 	Subject string `json:"subject"`
 	Body    string `json:"body"`
+	Template    string                   `json:"template"`
+	TemplateData map[string]interface{} `json:"templateData"`
+	Attachments []*email.Attachment     `json:"attachments"`
 }
 
 func SendEmailHandler (q *queue.Queue) http.HandlerFunc {
@@ -30,9 +33,12 @@ func SendEmailHandler (q *queue.Queue) http.HandlerFunc {
 		}
 
 		task := email.EmailTask{
-			To:      req.To,
-			Subject: req.Subject,
-			Body:    req.Body,
+			To:          req.To,
+			Subject:     req.Subject,
+			Body:        req.Body,
+			Template:    req.Template,
+			TemplateData: req.TemplateData,
+			Attachments: req.Attachments,
 		}
 
 		if err := q.EnqueueEmailTask(task); err != nil {

@@ -12,28 +12,36 @@ var (
 )
 
 // SendEmail sends an email using the configured provider
-func sendEmail(to, subject, body string) error {
+func sendEmail(task EmailTask) error {
 	provider := getEmailProvider()
 	logger.Log.Infof("Using email provider: %s", provider.Name())
 	// Send the email
-	return provider.SendEmail(to, subject, body)
+	return provider.SendEmail(task)
+}
+
+type Attachment struct {
+	FileName string `json:"fileName"` // Name of the file
+	Content  []byte `json:"content"`  // File content as bytes
 }
 
 type EmailTask struct {
-	To      string `json:"to"`
-	Subject string `json:"subject"`
-	Body    string `json:"body"`
+	To           string                 `json:"to"`
+	Subject      string                 `json:"subject"`
+	Body         string                 `json:"body"`
+	Template     string                 `json:"template"`
+	TemplateData map[string]interface{} `json:"templateData"`
+	Attachments  []*Attachment          `json:"attachments"`
 }
 
-func SendEmail(to, subject, body string) error {
+func SendEmail(task EmailTask) error {
 	const maxRetries = 3
 	var err error
 
 	for i := 0; i < maxRetries; i++ {
-		err = sendEmail(to, subject, body)
+		err = sendEmail(task)
 		if err == nil {
 			emailsSentCounter++
-			logger.Log.Infof("Email sent successfully to: %s (Total sent: %d)", to, emailsSentCounter)
+			logger.Log.Infof("Email sent successfully to: %s (Total sent: %d)", task.To, emailsSentCounter)
 			return nil // Email sent successfully
 		}
 		logger.Log.Warnf("Attempt %d: Failed to send email: %v", i+1, err)
