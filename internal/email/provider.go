@@ -87,8 +87,21 @@ func (p *SMTPProvider) sendEmail(task EmailTask) error {
 
 	// Add attachments
 	for _, attachment := range task.Attachments {
+		var fileContent []byte
+		var err error
+
+		// If a URL is provided, download the file
+		if attachment.URL != "" {
+			fileContent, err = downloadFile(attachment.URL)
+			if err != nil {
+				return fmt.Errorf("failed to download file from URL: %v", err)
+			}
+		} else {
+			// Use the provided file content
+			fileContent = attachment.Content
+		}
 		m.Attach(attachment.FileName, gomail.SetCopyFunc(func(w io.Writer) error {
-			_, err := w.Write(attachment.Content)
+			_, err := w.Write(fileContent)
 			return err
 		}))
 	}

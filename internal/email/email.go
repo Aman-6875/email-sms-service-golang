@@ -4,6 +4,8 @@ import (
 	"email-sms-service/config"
 	"email-sms-service/pkg/logger"
 	"fmt"
+	"io"
+	"net/http"
 )
 
 var (
@@ -22,6 +24,7 @@ func sendEmail(task EmailTask) error {
 type Attachment struct {
 	FileName string `json:"fileName"` // Name of the file
 	Content  []byte `json:"content"`  // File content as bytes
+	URL      string `json:"url"`   
 }
 
 type EmailTask struct {
@@ -71,4 +74,26 @@ func getEmailProvider() EmailProvider {
 		logger.Log.Fatalf("Unsupported email provider: %s", providerType)
 		return nil
 	}
+}
+
+func downloadFile(url string) ([]byte, error) {
+    // Send an HTTP GET request to the URL
+    resp, err := http.Get(url)
+    if err != nil {
+        return nil, fmt.Errorf("failed to download file: %v", err)
+    }
+    defer resp.Body.Close()
+
+    // Check if the response status code is OK
+    if resp.StatusCode != http.StatusOK {
+        return nil, fmt.Errorf("failed to download file: status code %d", resp.StatusCode)
+    }
+
+    // Read the file content
+    content, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return nil, fmt.Errorf("failed to read file content: %v", err)
+    }
+
+    return content, nil
 }

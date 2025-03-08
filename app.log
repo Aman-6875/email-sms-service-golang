@@ -1,100 +1,50 @@
 {
   "level": "info",
-  "msg": "Message enqueued successfully in queue: email_queue",
-  "time": "2025-03-09T02:39:42+06:00"
-}
-{
-  "level": "info",
   "msg": "Using email provider: SMTP",
-  "time": "2025-03-09T02:39:42+06:00"
-}
-{
-  "level": "info",
-  "msg": "Email sent successfully to: smamanullahaman@gmail.com",
-  "time": "2025-03-09T02:39:44+06:00"
-}
-{
-  "level": "info",
-  "msg": "Email sent successfully to: smamanullahaman@gmail.com (Total sent: 4)",
-  "time": "2025-03-09T02:39:44+06:00"
-}
-{
-  "level": "info",
-  "msg": "Message dequeued and processed from queue: email_queue",
-  "time": "2025-03-09T02:39:44+06:00"
+  "time": "2025-03-09T03:03:57+06:00"
 }
 {
   "level": "info",
   "msg": "Message enqueued successfully in queue: email_queue",
-  "time": "2025-03-09T02:41:03+06:00"
-}
-{
-  "level": "info",
-  "msg": "Using email provider: SMTP",
-  "time": "2025-03-09T02:41:03+06:00"
-}
-{
-  "level": "info",
-  "msg": "Email sent successfully to: smamanullahaman@gmail.com",
-  "time": "2025-03-09T02:41:05+06:00"
-}
-{
-  "level": "info",
-  "msg": "Email sent successfully to: smamanullahaman@gmail.com (Total sent: 5)",
-  "time": "2025-03-09T02:41:05+06:00"
-}
-{
-  "level": "info",
-  "msg": "Message dequeued and processed from queue: email_queue",
-  "time": "2025-03-09T02:41:05+06:00"
-}
-{
-  "level": "info",
-  "msg": "Message enqueued successfully in queue: email_queue",
-  "time": "2025-03-09T02:41:23+06:00"
-}
-{
-  "level": "info",
-  "msg": "Using email provider: SMTP",
-  "time": "2025-03-09T02:41:23+06:00"
-}
-{
-  "level": "info",
-  "msg": "Email sent successfully to: tanjed.atono@gmail.com",
-  "time": "2025-03-09T02:41:25+06:00"
-}
-{
-  "level": "info",
-  "msg": "Email sent successfully to: tanjed.atono@gmail.com (Total sent: 6)",
-  "time": "2025-03-09T02:41:25+06:00"
-}
-{
-  "level": "info",
-  "msg": "Message dequeued and processed from queue: email_queue",
-  "time": "2025-03-09T02:41:25+06:00"
-}
-{
-  "level": "info",
-  "msg": "Using email provider: SMTP",
-  "time": "2025-03-09T02:42:31+06:00"
-}
-{
-  "level": "info",
-  "msg": "Message enqueued successfully in queue: email_queue",
-  "time": "2025-03-09T02:42:31+06:00"
+  "time": "2025-03-09T03:03:57+06:00"
 }
 {
   "level": "info",
   "msg": "Email sent successfully to: bhogogiri@gmail.com",
-  "time": "2025-03-09T02:42:33+06:00"
+  "time": "2025-03-09T03:04:02+06:00"
 }
 {
   "level": "info",
-  "msg": "Email sent successfully to: bhogogiri@gmail.com (Total sent: 7)",
-  "time": "2025-03-09T02:42:33+06:00"
+  "msg": "Email sent successfully to: bhogogiri@gmail.com (Total sent: 1)",
+  "time": "2025-03-09T03:04:02+06:00"
 }
 {
   "level": "info",
   "msg": "Message dequeued and processed from queue: email_queue",
-  "time": "2025-03-09T02:42:33+06:00"
+  "time": "2025-03-09T03:04:02+06:00"
+}
+{
+  "level": "info",
+  "msg": "Using email provider: SMTP",
+  "time": "2025-03-09T03:05:52+06:00"
+}
+{
+  "level": "info",
+  "msg": "Message enqueued successfully in queue: email_queue",
+  "time": "2025-03-09T03:05:52+06:00"
+}
+{
+  "level": "info",
+  "msg": "Email sent successfully to: tanjed.atono@gmail.com",
+  "time": "2025-03-09T03:05:57+06:00"
+}
+{
+  "level": "info",
+  "msg": "Email sent successfully to: tanjed.atono@gmail.com (Total sent: 2)",
+  "time": "2025-03-09T03:05:57+06:00"
+}
+{
+  "level": "info",
+  "msg": "Message dequeued and processed from queue: email_queue",
+  "time": "2025-03-09T03:05:57+06:00"
 }
