@@ -1,50 +1,80 @@
 {
   "level": "info",
-  "msg": "Using email provider: SMTP",
-  "time": "2025-03-09T03:03:57+06:00"
+  "msg": "Logger initialized successfully!",
+  "time": "2025-03-10T00:48:25+06:00"
 }
 {
   "level": "info",
-  "msg": "Message enqueued successfully in queue: email_queue",
-  "time": "2025-03-09T03:03:57+06:00"
+  "msg": "Starting API server on :8080",
+  "time": "2025-03-10T00:48:25+06:00"
 }
 {
   "level": "info",
-  "msg": "Email sent successfully to: bhogogiri@gmail.com",
-  "time": "2025-03-09T03:04:02+06:00"
+  "msg": "Logger initialized successfully!",
+  "time": "2025-03-10T00:49:33+06:00"
 }
 {
   "level": "info",
-  "msg": "Email sent successfully to: bhogogiri@gmail.com (Total sent: 1)",
-  "time": "2025-03-09T03:04:02+06:00"
+  "msg": "Starting API server on :8080",
+  "time": "2025-03-10T00:49:33+06:00"
 }
 {
   "level": "info",
-  "msg": "Message dequeued and processed from queue: email_queue",
-  "time": "2025-03-09T03:04:02+06:00"
+  "msg": "Logger initialized successfully!",
+  "time": "2025-03-10T00:50:07+06:00"
 }
 {
   "level": "info",
-  "msg": "Using email provider: SMTP",
-  "time": "2025-03-09T03:05:52+06:00"
+  "msg": "Starting API server on :8080",
+  "time": "2025-03-10T00:50:07+06:00"
 }
 {
   "level": "info",
-  "msg": "Message enqueued successfully in queue: email_queue",
-  "time": "2025-03-09T03:05:52+06:00"
+  "msg": "Logger initialized successfully!",
+  "time": "2025-03-10T00:51:55+06:00"
 }
 {
   "level": "info",
-  "msg": "Email sent successfully to: tanjed.atono@gmail.com",
-  "time": "2025-03-09T03:05:57+06:00"
+  "msg": "Starting API server on :8080",
+  "time": "2025-03-10T00:51:55+06:00"
 }
 {
   "level": "info",
-  "msg": "Email sent successfully to: tanjed.atono@gmail.com (Total sent: 2)",
-  "time": "2025-03-09T03:05:57+06:00"
+  "msg": "Logger initialized successfully!",
+  "time": "2025-03-10T00:53:24+06:00"
 }
 {
   "level": "info",
-  "msg": "Message dequeued and processed from queue: email_queue",
-  "time": "2025-03-09T03:05:57+06:00"
+  "msg": "Starting API server on :8080",
+  "time": "2025-03-10T00:53:24+06:00"
+}
+{
+  "level": "info",
+  "msg": "Logger initialized successfully!",
+  "time": "2025-03-10T00:55:54+06:00"
+}
+{
+  "level": "info",
+  "msg": "Starting API server on :8080",
+  "time": "2025-03-10T00:55:54+06:00"
+}
+{
+  "level": "info",
+  "msg": "Logger initialized successfully!",
+  "time": "2025-03-10T00:56:47+06:00"
+}
+{
+  "level": "info",
+  "msg": "Starting API server on :8080",
+  "time": "2025-03-10T00:56:47+06:00"
+}
+{
+  "level": "info",
+  "msg": "Logger initialized successfully!",
+  "time": "2025-03-10T00:57:36+06:00"
+}
+{
+  "level": "info",
+  "msg": "Starting API server on :8080",
+  "time": "2025-03-10T00:57:36+06:00"
 }
